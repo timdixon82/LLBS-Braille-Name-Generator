@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://data.goatcounter.com; object-src 'none'; base-uri 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Braille Name Generator — LLBS</title>
 <style>
   :root {
@@ -12,7 +14,7 @@
     --bg: #FBFAF7;
     --surface: #FFFFFF;
     --text: #1A1A1A;
-    --muted: #5A5A5A;
+    --muted: #4A4A4A;
     --border: #DCDCDC;
     --focus: #FF6F00;
     --accent-soft: #F2EFE8;
@@ -173,10 +175,21 @@
     padding: 0; margin: -1px; overflow: hidden;
     clip: rect(0,0,0,0); border: 0;
   }
+  .skip-link {
+    position: absolute; left: -9999px; top: auto; width: 1px; height: 1px;
+    overflow: hidden; z-index: 100;
+  }
+  .skip-link:focus {
+    position: static; width: auto; height: auto; overflow: visible;
+    padding: 8px 16px; background: var(--navy); color: #FFF;
+    font-weight: 700; text-decoration: none; border-radius: 0 0 4px 4px;
+    outline: 3px solid var(--focus); outline-offset: 2px;
+  }
 </style>
 </head>
 <body>
-<main>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content">
   <header class="page-header">
     <img id="page-logo" src="" alt="Lincoln &amp; Lindsey Blind Society">
     <h1>Braille Name Generator</h1>
@@ -253,7 +266,8 @@
     <p>Each letter of the entered name is converted into Grade 1 (uncontracted) Unified English Braille. Capital indicators are not included &mdash; the braille shows the lowercase form for visual simplicity.</p>
     <p>Accented letters such as &eacute;, &ntilde;, &ouml;, and &ccedil; are kept in the printed name but reduced to their base letter for the braille (so &ldquo;Ren&eacute;e&rdquo; becomes &ldquo;renee&rdquo; in the dots). German &szlig; becomes &ldquo;ss&rdquo;.</p>
     <p>A braille cell is a 2&times;3 grid of dot positions, numbered:</p>
-    <p style="font-family: 'Courier New', Consolas, monospace; padding-left: 16px;">
+    <p>The left column contains dot positions 1 (top), 2 (middle), and 3 (bottom). The right column contains dot positions 4 (top), 5 (middle), and 6 (bottom).</p>
+    <p aria-hidden="true" style="font-family: 'Courier New', Consolas, monospace; padding-left: 16px;">
       1 &middot; 4<br>2 &middot; 5<br>3 &middot; 6
     </p>
     <p>Filled circles in the generated image represent dots that would be raised on the page. Empty circles show the cell structure but mark positions where there is no raised dot.</p>
@@ -261,8 +275,13 @@
 </main>
 
 <footer>
-  Lincoln &amp; Lindsey Blind Society &middot; Charity Number 1132353
+  Lincoln &amp; Lindsey Blind Society &middot; Charity Number 1132353 &middot; Version 1.0.0
 </footer>
+
+<script
+  data-goatcounter="https://timdixon82.goatcounter.com/count"
+  async
+  src="./assets/analytics/count.js"></script>
 
 <script>
   const BRAILLE_MAP = {
