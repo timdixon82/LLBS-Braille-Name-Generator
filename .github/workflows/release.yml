@@ -1,0 +1,28 @@
+# Release automation with release-please.
+#
+# Runs on every push to main. release-please reads conventional commit messages
+# to determine the next version number, updates VERSION and CHANGELOG.md, and
+# opens a release pull request. When that pull request is merged, a GitHub
+# release is created.
+#
+# Action versions are pinned to commit SHAs verified on 2026-05-23.
+# The GITHUB_TOKEN secret is a built-in GitHub Actions token, not a third-party
+# secret, and is the standard input for release-please-action.
+
+name: Release
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Please
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7  # v5.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
