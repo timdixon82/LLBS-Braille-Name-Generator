@@ -8,9 +8,9 @@ WCAG 2.2 AAA. This is the highest level of the Web Content Accessibility Guideli
 
 The following items were identified in the baseline audit (Carol, 2026-05-23) and are deferred to the accessibility phase. They are tracked in `todo.md`.
 
-### AAA-contrast on error text colour
+### Error text contrast (resolved at setup)
 
-The error text colour `#A00018` on the error background `#FBEAEA` is approximately 6:1, below the 7:1 AAA threshold. This is deferred to the accessibility phase and documented as a known gap.
+The error text colour `#A00018` on the error background `#FBEAEA` was listed as approximately 6:1 in the baseline audit (Carol AA2). Recalculated using the WCAG relative luminance formula on 2026-05-23: the actual ratio is 7.201:1, which passes the WCAG 1.4.6 AAA threshold of 7:1. No change to the colour is needed. The deferred item AA2 is closed.
 
 ### Muted text contrast (resolved in setup)
 
