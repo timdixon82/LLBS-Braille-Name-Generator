@@ -1,0 +1,18 @@
+{
+  "_comment": [
+    "Accessibility runner configuration for Pa11y.",
+    "Pre-existing AAA findings that are deferred to the accessibility phase are",
+    "documented in docs/accessibility.md and tracked in todo.md.",
+    "Remove each ignore entry when the corresponding finding is fixed.",
+    "Do not add new codes here without a matching entry in docs/accessibility.md.",
+    "The chromeLaunchConfig is required for CI runners that disable",
+    "unprivileged user namespaces."
+  ],
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+  },
+  "ignore": [
+    "WCAG2AAA.Principle1.Guideline1_4.1_4_6.G17.Fail",
+    "WCAG2AAA.Principle1.Guideline1_4.1_4_6.G18.Fail"
+  ]
+}
