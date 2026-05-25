@@ -4,6 +4,8 @@
 # on 2026-05-21. The version tag is in the trailing comment.
 #
 # Static site: served with Python's built-in HTTP server on port 8080.
+# Chrome/ChromeDriver versions are synced via browser-driver-manager to
+# avoid the runner version mismatch that causes axe to fail.
 
 name: Accessibility
 on:
@@ -22,6 +24,8 @@ jobs:
           node-version: lts/*
       - name: Install the accessibility tools
         run: npm install -g pa11y @axe-core/cli
+      - name: Sync Chrome and ChromeDriver versions
+        run: npx --yes browser-driver-manager install chrome
       - name: Serve the site
         run: python3 -m http.server 8080 &
       - name: Wait for server to be ready
