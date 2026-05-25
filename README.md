@@ -1,67 +1,80 @@
 # LLBS Braille Name Generator
 
-Type a name and get a shareable Grade 1 braille image in seconds — built for Lincoln and Lindsey Blind Society.
+A free, accessible web tool that turns any name into a braille image you can share.
+
+The tool was built for [Lincoln and Lindsey Blind Society (LLBS)](https://www.llbs.co.uk), a charity that has supported people with vision impairment in Greater Lincolnshire for over 100 years. It runs entirely in your browser. Nothing you type is sent to a server.
 
 ## What it does
 
-Supporters and staff of [Lincoln and Lindsey Blind Society (LLBS)](https://www.llbs.co.uk) use this tool to create branded social media images showing a name in Grade 1 (uncontracted) Unified English Braille. The page renders a 1080 x 1080 pixel PNG, generates ready-to-use alt text and post text, and offers a one-tap share sheet.
+Type a name, press the button, and within a second you have a 1080 by 1080 pixel image showing that name in Grade 1 (uncontracted) Unified English Braille, alongside the LLBS logo. The tool writes the alt text for you so you can copy it straight into a social media post.
 
-Everything runs in the browser — no server, no cookies, no uploaded data.
+This is the fastest way to create a shareable, accessible braille image for LLBS social media, newsletters, or events.
 
-## Using the tool
+## Who it is for
 
-1. Open the page at <https://timdixon82.github.io/LLBS-Braille-Name-Generator/>.
-2. Type a name in the "Name to convert" field and press "Generate braille image".
-3. Download the PNG, copy it, or use the share sheet to send it to any app.
-4. Add the generated alt text when posting so blind and partially sighted people can access the content.
+This tool is designed with blind and partially sighted people in mind. The target audience includes LLBS staff and supporters who want to create braille images for social media, and anyone who wants to show a friend or colleague what their name looks like in braille.
 
-### Pre-filling via URL
+Every part of the tool is designed to be usable with a screen reader, a keyboard, or a touch device.
 
-You can share a link that pre-fills and generates a name automatically:
+## How to use it
 
-```
-https://timdixon82.github.io/LLBS-Braille-Name-Generator/?name=Jane+Smith
-```
+1. Visit [LLBS Braille Name Generator](https://timdixon82.github.io/LLBS-Braille-Name-Generator/) in any modern browser.
+2. Type a name in the "Name to convert" field. Up to 30 characters, letters and spaces only. Numbers and punctuation are ignored.
+3. Press "Generate braille image".
+4. Download the image, copy it, or use the share sheet to send it to another app.
+5. Copy the alt text from the "Alt text" field and add it when you post.
 
-The `?name=` parameter pre-fills the field and triggers generation on load. The typed name is also preserved in browser history via `history.replaceState`, which is what enables the shareable link. See `docs/decisions/005-braille-translation-posture.md` for the privacy note on browser history.
+You can also pre-fill a name from a link: add `?name=John%20Smith` to the end of the address. The tool will fill in the name and generate the image straight away.
 
-### What names work
+## What the braille shows
 
-- Letters A to Z and spaces are converted to Grade 1 braille.
-- Accented letters (for example é, ñ, ö) are kept in the printed name but reduced to their base letter for the braille dots.
-- Numbers, punctuation, and unsupported characters are accepted in the input but ignored during conversion.
-- Maximum 30 characters.
+Each letter is shown as Grade 1 (uncontracted) Unified English Braille. This means every letter is spelled out dot by dot, with no abbreviations or contractions. Capital indicators are not included, so the braille shows the lowercase form of each letter.
 
-## Accessibility
+Accented letters are kept in the printed name but reduced to their base letter for the braille. For example, the name "Renée" prints as "Renée" but brailles as "renee".
 
-The tool targets WCAG 2.2 AAA. Key provisions:
-
-- Every generated image has machine-readable alt text built automatically.
-- The braille breakdown list reads each letter and its dot numbers to screen readers.
-- All controls are keyboard-operable with a visible focus indicator.
-- The page meets the team's contrast requirements (minimum 7:1 for normal text).
-
-Automated accessibility tests (axe-core, Pa11y) run on every pull request. Manual screen reader testing with VoiceOver and JAWS is required before each release.
-
-## Development setup
-
-Requirements: Node.js LTS.
+## File structure
 
 ```
-npm ci
+index.html              The tool. A single HTML file that runs in the browser.
+assets/
+  analytics/
+    count.js            Self-hosted GoatCounter analytics script.
+docs/                   Project wiki: decisions, accessibility notes, exceptions.
+.github/workflows/      Continuous integration, accessibility, security, and release workflows.
+package.json            Development tooling (linters). Not served to the browser.
+VERSION                 Current release version.
+CHANGELOG.md            Release history.
+```
+
+## Running it locally
+
+The tool is a plain HTML file with no build step. Open `index.html` directly in a browser, or serve the project root with any local HTTP server.
+
+To run the linters:
+
+```
+npm install
 npm run lint
 ```
 
-The lint suite covers HTML (html-validate), CSS (Stylelint), and JavaScript (ESLint). All three must exit 0 before a pull request is merged.
+## Accessibility
 
-## Braille scope
+The tool is built to meet WCAG 2.2 AAA, the highest level of the Web Content Accessibility Guidelines. It is tested with VoiceOver on macOS and JAWS on Windows.
 
-This tool converts names to Grade 1 (uncontracted) braille — each letter is spelled out dot by dot, with no capital indicators, number indicators, or Grade 2 contractions. This is an intentional decision recorded in `docs/decisions/005-braille-translation-posture.md`. For a full educational braille reference, see the [LLBS Braille Reference](https://github.com/timdixon82/Braille-Reference) project.
+Key accessibility features include a skip link, labelled form controls, a live status region that announces the result without moving focus, a braille breakdown list that gives screen reader users full access to the dot patterns, and alt text generated automatically for every image.
 
-## Privacy
+Accessibility findings and exceptions are recorded in [docs/accessibility.md](docs/accessibility.md).
 
-Page view counts are collected via [GoatCounter](https://www.goatcounter.com) at `timdixon82.goatcounter.com`. No user content (names, generated images) is transmitted or stored. See `docs/privacy.md` for the full privacy posture.
+## Security
+
+This is a static, client-side tool. No data is sent to any server other than the GoatCounter page-view beacon. A Content Security Policy meta tag restricts scripts and styles to the same origin. See [docs/exceptions/github-pages-security-headers.md](docs/exceptions/github-pages-security-headers.md) for the standing GitHub Pages security-header exception.
+
+## Analytics
+
+This tool uses GoatCounter to count page views. GoatCounter records the page path, the referring site, a coarse browser profile, and an approximate country. It does not collect the name you type, any personal data, or any identifying cookie. See [docs/privacy.md](docs/privacy.md) for the full privacy statement.
 
 ## Licence
 
-Source code: MIT. The LLBS logo is the property of Lincoln and Lindsey Blind Society and is used with permission. It is not covered by the code licence.
+MIT. See [LICENSE](LICENSE).
+
+Copyright 2026 Tim Dixon.
