@@ -3,8 +3,7 @@
 # Action versions were verified against GitHub and pinned to commit SHAs
 # on 2026-05-21. The version tag is in the trailing comment.
 #
-# The site must be built or served before the tools run. Adapt the serve
-# step and the URL to the project's stack.
+# Static site: served with Python's built-in HTTP server on port 8080.
 
 name: Accessibility
 on:
@@ -24,7 +23,13 @@ jobs:
       - name: Install the accessibility tools
         run: npm install -g pa11y @axe-core/cli
       - name: Serve the site
-        run: 'echo "Adapt: start the site on http://localhost:8080"'
+        run: python3 -m http.server 8080 &
+      - name: Wait for server to be ready
+        run: |
+          for i in $(seq 1 10); do
+            curl -sf http://localhost:8080 > /dev/null && break
+            sleep 1
+          done
       - name: Pa11y at WCAG 2.2 AAA
         run: pa11y --standard WCAG2AAA "http://localhost:8080"
       - name: axe-core at WCAG 2.2 AAA
