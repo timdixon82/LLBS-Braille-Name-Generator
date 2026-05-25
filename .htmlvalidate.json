@@ -3,9 +3,6 @@
   "rules": {
     "no-trailing-whitespace": "error",
     "void-style": ["error", { "style": "omit" }],
-    "no-inline-style": "off",
-    "attribute-allowed-values": "off",
-    "element-required-attributes": "off",
     "aria-label-misuse": "off"
   }
 }

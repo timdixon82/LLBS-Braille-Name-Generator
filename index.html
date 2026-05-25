@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://timdixon82.goatcounter.com; object-src 'none'; base-uri 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Braille Name Generator — LLBS</title>
@@ -186,12 +187,18 @@
     outline: 3px solid var(--focus); outline-offset: 2px;
   }
 </style>
+=======
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; font-src 'self'; object-src 'none'; base-uri 'self'; connect-src 'self' https://timdixon82.goatcounter.com">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Braille Name Generator — LLBS</title>
+<link rel="stylesheet" href="styles/main.css">
+>>>>>>> 41d57e2 (chore: project setup — file split, lint, workflows, ADRs, accessibility fixes)
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <main id="main-content">
   <header class="page-header">
-    <img id="page-logo" src="" alt="Lincoln &amp; Lindsey Blind Society">
+    <img id="page-logo" src="assets/llbs-logo.png" alt="Lincoln &amp; Lindsey Blind Society">
     <h1>Braille Name Generator</h1>
     <p class="byline">A tool by <a href="https://www.llbs.co.uk" target="_blank" rel="noopener">Lincoln &amp; Lindsey Blind Society</a></p>
   </header>
@@ -200,16 +207,17 @@
   <form id="form" novalidate>
     <label for="name-input">Name to convert</label>
     <p class="hint" id="name-hint">Letters, accented letters, and spaces only. Numbers and punctuation are ignored. Maximum 30 characters.</p>
-    <input type="text" id="name-input" name="name" autocomplete="off" maxlength="30" aria-describedby="name-hint" required>
+    <input type="text" id="name-input" name="name" autocomplete="name" maxlength="30"
+           aria-describedby="name-hint" aria-errormessage="status" required>
     <button type="submit" id="generate-btn" class="primary primary-large">Generate braille image</button>
-    <p class="hint" style="margin-top:14px;">You can also pre-fill a name via the URL: <code>?name=John%20Smith</code></p>
+    <p class="hint hint-url">You can also pre-fill a name via the URL: <code>?name=John%20Smith</code></p>
   </form>
 
   <div id="status" role="status" aria-live="polite"></div>
 
   <section id="result" aria-labelledby="result-heading" hidden>
     <h2 id="result-heading">Image</h2>
-    <img id="result-img" alt="">
+    <img id="result-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
     <canvas id="canvas" width="1080" height="1080" aria-hidden="true"></canvas>
 
     <p id="ios-tip" class="ios-tip" hidden>
@@ -249,9 +257,9 @@
       </button>
     </div>
 
-    <h2>Braille breakdown</h2>
+    <h2 id="breakdown-heading">Braille breakdown</h2>
     <p id="breakdown-summary"></p>
-    <ol class="breakdown" id="breakdown-list" aria-label="Letter by letter braille breakdown"></ol>
+    <ol class="breakdown" id="breakdown-list" aria-labelledby="breakdown-heading"></ol>
   </section>
 
   <section class="about-llbs" aria-labelledby="about-llbs-heading">
@@ -266,10 +274,15 @@
     <p>Each letter of the entered name is converted into Grade 1 (uncontracted) Unified English Braille. Capital indicators are not included &mdash; the braille shows the lowercase form for visual simplicity.</p>
     <p>Accented letters such as &eacute;, &ntilde;, &ouml;, and &ccedil; are kept in the printed name but reduced to their base letter for the braille (so &ldquo;Ren&eacute;e&rdquo; becomes &ldquo;renee&rdquo; in the dots). German &szlig; becomes &ldquo;ss&rdquo;.</p>
     <p>A braille cell is a 2&times;3 grid of dot positions, numbered:</p>
+<<<<<<< HEAD
     <p>The left column contains dot positions 1 (top), 2 (middle), and 3 (bottom). The right column contains dot positions 4 (top), 5 (middle), and 6 (bottom).</p>
     <p aria-hidden="true" style="font-family: 'Courier New', Consolas, monospace; padding-left: 16px;">
+=======
+    <p aria-hidden="true" class="braille-diagram">
+>>>>>>> 41d57e2 (chore: project setup — file split, lint, workflows, ADRs, accessibility fixes)
       1 &middot; 4<br>2 &middot; 5<br>3 &middot; 6
     </p>
+    <p>A braille cell has six dot positions in two columns of three. Left column: 1 top, 2 middle, 3 bottom. Right column: 4 top, 5 middle, 6 bottom.</p>
     <p>Filled circles in the generated image represent dots that would be raised on the page. Empty circles show the cell structure but mark positions where there is no raised dot.</p>
   </details>
 </main>
@@ -281,6 +294,7 @@
 <script
   data-goatcounter="https://timdixon82.goatcounter.com/count"
   async
+<<<<<<< HEAD
   src="./assets/analytics/count.js"></script>
 
 <script>
@@ -617,5 +631,9 @@
     }
   });
 </script>
+=======
+  src="assets/analytics/count.js"></script>
+<script type="module" src="scripts/app.js"></script>
+>>>>>>> 41d57e2 (chore: project setup — file split, lint, workflows, ADRs, accessibility fixes)
 </body>
 </html>

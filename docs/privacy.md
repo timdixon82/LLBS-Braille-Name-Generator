@@ -1,43 +1,21 @@
-# Privacy: LLBS Braille Name Generator
-
-## What this tool collects
-
-The LLBS Braille Name Generator does not collect, transmit, or store any personal data. The name you type stays in your browser and is never sent to a server. The generated image is produced on your own device using the HTML Canvas API. No upload occurs.
+# Privacy
 
 ## Analytics
 
-This project uses GoatCounter to count page views. GoatCounter is the team's standard analytics tool for projects that ship a publicly accessible page.
+This project uses [GoatCounter](https://www.goatcounter.com) for aggregate, anonymised page-view analytics.
 
-### Implementation
+**Tracker:** `https://timdixon82.goatcounter.com/count` (the team's shared GoatCounter site).
 
-The GoatCounter script (`count.js`) is self-hosted in this repository at `assets/analytics/count.js`. The script is fetched from the upstream GoatCounter source and committed locally so it is covered by the project's own Content Security Policy and is not a third-party script load from an external origin. The script should be reviewed against the upstream once a quarter and updated if it has changed.
+**What is collected:** page path, referrer, coarse browser and screen-size profile, and an approximation of the visitor's country derived briefly from the IP address. The IP address itself is not stored.
 
-The tracker URL for this project is the team account at `https://timdixon82.goatcounter.com/count`. This URL is stored as the `data-goatcounter` attribute on the analytics script tag in `index.html`.
+**What is not collected:** no user content (no names entered, no generated images, no form inputs), no session data, no cross-site tracking.
 
-### What is collected
+**Data Processing Agreement:** A DPA is in place between Tim Dixon and GoatCounter covering the `timdixon82.goatcounter.com` account.
 
-GoatCounter records:
+**Cookie and consent:** GoatCounter does not set persistent identifying cookies. No consent banner is required under UK GDPR for aggregate, anonymised analytics of this type.
 
-- The page path (which page was visited).
-- The HTTP referrer (which site the visitor came from, if any).
-- A coarse browser and screen-size profile.
-- An approximation of the visitor's country, derived briefly from the Internet Protocol (IP) address. The IP address itself is not stored.
+## User data
 
-### What is not collected
+The page takes a name as input and generates a PNG image in the browser. No user data is transmitted to any server. No data is stored beyond the current browser session.
 
-GoatCounter does not collect:
-
-- The name typed into the generator.
-- Any image data or generated output.
-- Any form submissions.
-- Any identifying cookie or persistent tracking identifier.
-
-### Legal basis
-
-No consent banner is required under UK General Data Protection Regulation (UK GDPR) for aggregate, anonymised analytics that do not set persistent identifying cookies. GoatCounter does not set such cookies.
-
-A Data Processing Agreement (DPA) is in place between Tim Dixon and GoatCounter. The DPA covers the `timdixon82.goatcounter.com` account used by this project.
-
-### Content Security Policy
-
-The `Content-Security-Policy` meta tag in `index.html` includes `connect-src 'self' https://data.goatcounter.com` to allow the outbound beacon that count.js sends when recording a page view. No other third-party network call is made by the page.
+The `?name=` URL parameter and `history.replaceState` preserve the typed name in the browser's local history for the duration of the session. See `docs/decisions/005-braille-translation-posture.md` for details.

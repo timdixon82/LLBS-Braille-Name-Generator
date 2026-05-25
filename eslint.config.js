@@ -1,24 +1,16 @@
 // ESLint flat config (ESLint 9+).
-// The project currently delivers its JavaScript inline in index.html.
-// This config covers any future extracted *.js files at the root or under js/,
-// excluding config files and the GoatCounter analytics script.
-// Splitting inline code into separate files is tracked in docs/decisions/ as ADR 001.
+// scripts/app.js runs in the browser as an ES module (type="module").
+// Browser globals come from the `globals` package so the no-undef rule
+// catches real undefined references without a hand-kept list.
 
 import globals from 'globals';
 
 export default [
   {
-    ignores: [
-      'eslint.config.js',
-      'node_modules/**',
-      'assets/analytics/count.js',
-    ],
-  },
-  {
-    files: ['*.js', 'js/**/*.js'],
+    files: ['scripts/**/*.js'],
     languageOptions: {
       ecmaVersion: 2020,
-      sourceType: 'script',
+      sourceType: 'module',
       globals: globals.browser,
     },
     rules: {

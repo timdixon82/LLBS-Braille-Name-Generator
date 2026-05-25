@@ -1,37 +1,30 @@
-# Project Wiki: LLBS Braille Name Generator
+# Project Wiki: <project>
 
-This index lists every page in the LLBS Braille Name Generator project wiki, organised by category. The global wiki at `AgentTeam/docs/` holds team-wide standards. This wiki holds what is specific to this project.
+This is the project wiki for <project>. It holds knowledge specific to this project. Knowledge shared across every project lives in the global wiki at the team root.
 
-## Standards and coding
+Cross-cutting learnings flow to both this wiki and the global wiki at the time they are learned.
 
-- [Accessibility](accessibility.md): project-specific accessibility notes, gaps, and exceptions.
-- [Release process](release-process.md): branching, pull requests, merge gate, and releases for this project.
+## Standards
 
-## Stack
-
-- Stack: static front-end of HTML, CSS, and JavaScript, hosted on GitHub Pages.
-- Global stack standard: [AgentTeam global wiki: stacks/static-front-end.md](../../AgentTeam/docs/stacks/static-front-end.md).
-
-## Reference
-
-- [Glossary](glossary.md): domain terms used in this project.
+- `coding-standards.md`: this project's stack and its project-specific coding notes.
+- `accessibility.md`: this project's accessibility notes.
 
 ## Decisions
 
-Architecture Decision Records, numbered in the order Jacob proposed them during work 015-llbs-bng-setup.
+No decision records yet. Architecture Decision Records are added to `decisions/` as they are made.
 
-- [001: Single-file structure retained for setup; split deferred to ADR 001](decisions/001-foundations.md)
+## Patterns
 
-## Privacy
+No pattern pages yet.
 
-- [Privacy](privacy.md): analytics posture, GoatCounter implementation, and data collection statement.
+## Glossary
+
+- `glossary.md`: this project's domain terms.
 
 ## Exceptions
 
-Recorded accessibility and security exceptions.
-
-- [GitHub Pages security-header gap](exceptions/github-pages-security-headers.md): pointer to the team's standing exception in the global wiki.
+- `exceptions/`: this project's documented accessibility and security exceptions.
 
 ## Operations
 
-- [Log](log.md): chronological, append-only operations log.
+- `log.md`: this project's chronological, append-only operations log.

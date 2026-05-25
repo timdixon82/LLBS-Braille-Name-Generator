@@ -1,13 +1,7 @@
 # Release automation with release-please.
 #
-# Runs on every push to main. release-please reads conventional commit messages
-# to determine the next version number, updates VERSION and CHANGELOG.md, and
-# opens a release pull request. When that pull request is merged, a GitHub
-# release is created.
-#
-# Action versions are pinned to commit SHAs verified on 2026-05-23.
-# The GITHUB_TOKEN secret is a built-in GitHub Actions token, not a third-party
-# secret, and is the standard input for release-please-action.
+# Action versions were verified against GitHub and pinned to commit SHAs
+# on 2026-05-21. The version tag is in the trailing comment.
 
 name: Release
 on:
@@ -26,3 +20,9 @@ jobs:
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7  # v5.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Deploy step: this is a stub. Fill it in with the project's hosting
+      # target. GitHub Pages for a static project; the Amazon Web Services
+      # Lightsail virtual private server running Virtualmin for a PHP and
+      # MariaDB project. Deploy only when release-please has created a
+      # release.

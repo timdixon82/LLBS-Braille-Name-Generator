@@ -1,19 +1,18 @@
 # CodeQL static analysis.
 #
-# Runs on every pull request and weekly on Monday morning.
-# Analyses JavaScript. The project is public and hosted on GitHub, so
-# CodeQL is available at no cost.
+# Action versions were verified against GitHub and pinned to commit SHAs
+# on 2026-05-21. The version tag is in the trailing comment.
 #
-# Security note: no untrusted GitHub context variables are interpolated
-# into any run step.
-#
-# Action versions are pinned to commit SHAs verified on 2026-05-23.
+# CodeQL does not support PHP, and on a free GitHub account it is not
+# available for a private repository. This workflow covers JavaScript for
+# a public static project. For a private PHP or WordPress project, remove
+# this workflow and rely on the Semgrep job in security.yml instead.
 
 name: CodeQL
 on:
   pull_request:
   schedule:
-    - cron: '0 6 * * 1'
+    - cron: '0 6 * * 1'  # weekly, Monday morning
 
 permissions:
   contents: read
