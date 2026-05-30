@@ -12,7 +12,7 @@ LLBS Braille Name Generator meets every condition the standing exception names: 
 
 Compensating controls in place for this project:
 
-- A `Content-Security-Policy` meta tag in `index.html` restricts scripts to `'self'` (plus `'unsafe-inline'` required for the current single-file inline script, to be removed when ADR 001 is implemented), styles to `'self'` plus `'unsafe-inline'`, and images to `'self'`, `data:`, and `blob:` for the canvas output.
+- A `Content-Security-Policy` meta tag in `index.html` restricts scripts to `'self'`, styles to `'self'`, and images to `'self'`, `data:`, and `blob:` for the canvas output. The file split (ADR 002) has been applied and `'unsafe-inline'` is no longer required.
 - A `Referrer-Policy` meta tag in `index.html` limits referrer information to `strict-origin-when-cross-origin`.
 
 This pointer file exists so the project's exception ledger remains complete on its own. A reader auditing this project's security posture will find this entry and read the team-wide assessment.

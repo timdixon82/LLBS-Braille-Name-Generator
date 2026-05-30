@@ -1,4 +1,4 @@
-# Decision 001: Split the single-file page into separate HTML, CSS, and JavaScript files
+# Decision 002: Split the single-file page into separate HTML, CSS, and JavaScript files
 
 - Date: 2026-05-25
 - Status: accepted
@@ -18,5 +18,5 @@ The refactor is behaviour-preserving. The page looks and works the same as befor
 ## Consequences
 
 - The file split unblocks a clean Content Security Policy. Without it, `'unsafe-inline'` would be required in `script-src` and `style-src`. After the split, neither is needed.
-- Diffs are now reviewable. The 22 KB base64 logo blob was also extracted to `assets/llbs-logo.png` as part of this setup (see ADR 003).
+- Diffs are now reviewable. The 22 KB base64 logo blob was also extracted to `assets/llbs-logo.png` as part of this setup (see ADR 004).
 - The `scripts/app.js` module is loaded with `type="module"`, which defers execution until after HTML parsing — a safe change since the original script was already at the bottom of `<body>`.

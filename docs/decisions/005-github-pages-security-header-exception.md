@@ -1,4 +1,4 @@
-# Decision 004: GitHub Pages security-header exception
+# Decision 005: GitHub Pages security-header exception
 
 - Date: 2026-05-25
 - Status: accepted

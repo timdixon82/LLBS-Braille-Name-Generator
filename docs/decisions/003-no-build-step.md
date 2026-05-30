@@ -1,4 +1,4 @@
-# Decision 002: No build step, no framework
+# Decision 003: No build step, no framework
 
 - Date: 2026-05-25
 - Status: accepted
