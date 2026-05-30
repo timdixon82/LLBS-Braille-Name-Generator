@@ -1,4 +1,4 @@
-# Decision 003: LLBS logo stored as a committed PNG, not an inline data URL
+# Decision 004: LLBS logo stored as a committed PNG, not an inline data URL
 
 - Date: 2026-05-25
 - Status: accepted

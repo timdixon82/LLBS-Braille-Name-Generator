@@ -1,4 +1,4 @@
-# Decision 005: Braille translation posture — Grade 1, no indicators, lossy accent reduction
+# Decision 006: Braille translation posture — Grade 1, no indicators, lossy accent reduction
 
 - Date: 2026-05-25
 - Status: accepted

@@ -12,23 +12,23 @@ The setup build is scoped to infrastructure: linters, CI, release-please, GoatCo
 
 ## Decision
 
-### ADR 001 deferred: file split
+### ADR 002 deferred: file split
 
 Splitting `index.html` into separate HTML, CSS (`style.css`), and JavaScript (`app.js`) files is deferred to a follow-on branch. The split is a pure refactor with no change to behaviour, appearance, or accessibility. Once the split is done, the Content Security Policy can remove `'unsafe-inline'` from `script-src` and `style-src`.
 
-### ADR 002: no build step
+### ADR 003: no build step
 
 The deployed site is the HTML, CSS, and JavaScript in the repository. No bundler, transpiler, or template engine is used. The diff between source and deployed artefact is one-to-one. This is the team's standard for a static front-end with no framework dependency.
 
-### ADR 003 deferred: logo as a committed image asset
+### ADR 004 deferred: logo as a committed image asset
 
 Moving the base-64 embedded LLBS logo from the inline script to a committed `assets/llbs-logo.png` is deferred to the same follow-on branch as the file split. The logo is large and makes the HTML diff unreadable; extracting it is the right action, but it is grouped with the file split to keep the setup build minimal.
 
-### ADR 004: GitHub Pages security-header exception
+### ADR 005: GitHub Pages security-header exception
 
 This project qualifies for the team's standing GitHub Pages security-header exception. The exception is recorded at [docs/exceptions/github-pages-security-headers.md](../exceptions/github-pages-security-headers.md).
 
-### ADR 005: Braille translation posture
+### ADR 006: Braille translation posture
 
 The generator uses Grade 1 (uncontracted) Unified English Braille for the 26 letters plus space. It intentionally does not include capital indicators, number indicators, or Grade 2 contractions. Accented letters are reduced to their base ASCII equivalent. Digits and punctuation are dropped. This is a deliberate scope decision: the tool is a social-share aid, not a braille production system. The Braille-Reference project is the place for richer UEB coverage.
 
