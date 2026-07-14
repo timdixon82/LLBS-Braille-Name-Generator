@@ -32,9 +32,14 @@
 # hashFiles('package.json') pattern in ci.yml and security.yml; hashFiles is
 # step-level only, not valid at job level):
 #   - package.json present (static-app, browser-extension): the project is
-#     installed and built (npm ci, then npm run build --if-present) and the
-#     dist/ build output is served, since a bundler's index.html loads bare
-#     ES module imports that only resolve after a build.
+#     installed and built (npm ci, then npm run build --if-present).
+#     If the build produced a dist/ directory (hashFiles('dist/**') != ''),
+#     that build output is served, since a bundler's index.html loads bare
+#     ES module imports that only resolve after a build. If no dist/ was
+#     produced — a bundler-free project with a package.json for tooling
+#     only, but no "build" script, e.g. Braille Reference — npm run build
+#     --if-present no-ops and there is no dist/ to serve, so the repository
+#     root is served instead, same as a static-content project.
 #   - package.json absent (static-content): the repository root is served
 #     unchanged, as before.
 # dist/ is the template default build output directory (Vite's default). A
@@ -133,12 +138,12 @@ jobs:
         if: steps.archetype.outputs.is_browser_extension != 'true' && hashFiles('package.json') != ''
         run: npm run build --if-present
 
-      - name: Serve the built site in the background (static-app / browser-extension)
-        if: steps.archetype.outputs.is_browser_extension != 'true' && hashFiles('package.json') != ''
+      - name: Serve the built site in the background (static-app / browser-extension, build present)
+        if: steps.archetype.outputs.is_browser_extension != 'true' && hashFiles('package.json') != '' && hashFiles('dist/**') != ''
         run: python3 -m http.server 8080 --directory dist &
 
-      - name: Serve the site in the background (static-content)
-        if: steps.archetype.outputs.is_browser_extension != 'true' && hashFiles('package.json') == ''
+      - name: Serve the repository root in the background (static-content, or a bundler-free package.json project with no dist/ output)
+        if: steps.archetype.outputs.is_browser_extension != 'true' && hashFiles('dist/**') == ''
         run: python3 -m http.server 8080 &
 
       - name: Wait for the server to be ready
