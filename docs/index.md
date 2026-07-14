@@ -19,6 +19,7 @@ Architecture Decision Records are in `decisions/`. Current records:
 - `004-logo-as-committed-asset.md`: LLBS logo stored as a committed PNG.
 - `005-github-pages-security-header-exception.md`: GitHub Pages security-header exception.
 - `006-braille-translation-posture.md`: Grade 1, no indicators, lossy accent reduction.
+- `007-braille-helpers-extraction.md`: pure braille/text helpers extracted to `scripts/braille.js` for unit testing.
 
 ## Patterns
 

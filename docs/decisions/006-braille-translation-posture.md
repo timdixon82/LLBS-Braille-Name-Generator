@@ -25,7 +25,7 @@ This scope is frozen. Future requests to add capital indicators, number indicato
 
 The page includes a client-side filter that blocks offensive terms from the generated image. The filter:
 
-- Stores a blocked-word list as a base64-encoded string in `scripts/app.js`, decoded at startup with `atob()`. The base64 is **cosmetic obfuscation only** — it is not encryption and not a security control.
+- Stores a blocked-word list as a base64-encoded string in `scripts/braille.js` (extracted from `scripts/app.js` by Decision 007 for unit testing), decoded at import time with `atob()`. The base64 is **cosmetic obfuscation only** — it is not encryption and not a security control.
 - Normalises input before matching: lowercases, strips diacritics, then applies leet-speak substitutions (for example, 3 → e, @ → a).
 - Expands wildcard asterisk characters with a cap of 200 variants per entry to prevent denial-of-service from a pathological word list.
 - Is **English-only**. It does not cover offensive terms in other languages.

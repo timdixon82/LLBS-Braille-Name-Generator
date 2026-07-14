@@ -1,61 +1,17 @@
-  const BRAILLE_MAP = {
-    'a':[1],'b':[1,2],'c':[1,4],'d':[1,4,5],'e':[1,5],'f':[1,2,4],'g':[1,2,4,5],
-    'h':[1,2,5],'i':[2,4],'j':[2,4,5],'k':[1,3],'l':[1,2,3],'m':[1,3,4],
-    'n':[1,3,4,5],'o':[1,3,5],'p':[1,2,3,4],'q':[1,2,3,4,5],'r':[1,2,3,5],
-    's':[2,3,4],'t':[2,3,4,5],'u':[1,3,6],'v':[1,2,3,6],'w':[2,4,5,6],
-    'x':[1,3,4,6],'y':[1,3,4,5,6],'z':[1,3,5,6],' ':[]
-  };
+  import {
+    BRAILLE_MAP,
+    isProfane,
+    asciifyForBraille,
+    tidyDisplayName,
+    buildAltText,
+    buildShareText,
+    buildBreakdown,
+    dataURLToBlob,
+  } from './braille.js';
+
   const NAVY='#0A2342', TEAL='#1B9D8F', TEXT='#1A1A1A', MUTED='#555555', EMPTY='#D5D5D5';
   const NAME_FONT_STACK = "'Avenir Next','Avenir','Helvetica Neue','Segoe UI',system-ui,sans-serif";
 
-  const _b = ['ZnVjaw==','ZmNraW5n','Y3VudA==','dHdhdA==','d2Fua2Vy','YmFzdGFyZA==',
-    'Yml0Y2g=','c2hpdA==','YXNzaG9sZQ==','YXJzZWhvbGU=','cHJpY2s=','cGlzcw==',
-    'c2x1dA==','d2hvcmU=','cmV0YXJk','dGFyZA==','c3Bhc3RpYw==','c3Bhego=','dHJhbm55',
-    'ZmFnZ290','ZmFnb3Q=','ZHlrZQ==','bmlnZ2Vy','bmlnZ2E=','Y2hpbms=','Z29vaw==',
-    'c3BpYw==','a2lrZQ==','d2V0YmFjaw==','d29w','cGFraQ==','cmFwZWQ=','cmFwaW5n',
-    'am90','am90c28=','YWhvbGU='];
-  const BLOCKED = Array.from(new Set(_b.map(s => atob(s))));
-
-  function normaliseForFilter(t) {
-    return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .replace(/[1!|]/g,'i').replace(/3/g,'e').replace(/[4@]/g,'a')
-      .replace(/0/g,'o').replace(/[5$]/g,'s').replace(/7/g,'t')
-      .replace(/8/g,'b').replace(/[^a-z]/g,'');
-  }
-  function isProfane(text) {
-    const variants = [];
-    if (text.indexOf('*') === -1) variants.push(text);
-    else {
-      const vowels = ['a','e','i','o','u'];
-      let stack = [text];
-      while (stack.length) {
-        const s = stack.pop();
-        const idx = s.indexOf('*');
-        if (idx === -1) { variants.push(s); continue; }
-        for (const v of vowels) stack.push(s.slice(0, idx) + v + s.slice(idx + 1));
-        if (stack.length > 200) break;
-      }
-    }
-    return variants.some(v => {
-      const n = normaliseForFilter(v);
-      return n && BLOCKED.some(t => t && n.includes(t));
-    });
-  }
-
-  const SPECIAL_CHAR_MAP = {'ß':'ss','ẞ':'ss','æ':'ae','Æ':'ae','œ':'oe','Œ':'oe',
-    'ø':'o','Ø':'o','ð':'d','Ð':'d','þ':'th','Þ':'th','ł':'l','Ł':'l'};
-  function asciifyForBraille(text) {
-    let out = '';
-    for (const ch of text) out += (SPECIAL_CHAR_MAP[ch] !== undefined) ? SPECIAL_CHAR_MAP[ch] : ch;
-    return out.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .toLowerCase().replace(/[^a-z\s]/g,'').replace(/\s+/g,' ').trim();
-  }
-  function tidyDisplayName(text) {
-    return text.replace(/\s+/g,' ').trim().split(' ').map(w => {
-      if (!w) return '';
-      return w.charAt(0).toLocaleUpperCase() + w.slice(1).toLocaleLowerCase();
-    }).join(' ');
-  }
   function isIOS() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -79,15 +35,6 @@
   let cachedFile = null;
 
   function setStatus(msg, type) { statusEl.textContent = msg; statusEl.className = type || ''; }
-
-  function dataURLToBlob(dataURL) {
-    const [header, b64] = dataURL.split(',');
-    const mime = header.match(/:(.*?);/)[1];
-    const bytes = atob(b64);
-    const arr = new Uint8Array(bytes.length);
-    for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
-    return new Blob([arr], { type: mime });
-  }
 
   function updateCharCount() {
     const len = shareTextEl.value.length;
@@ -168,26 +115,15 @@
     ctx.fillStyle = NAVY; ctx.fillRect(0, H-14, W, 14);
   }
 
-  function buildAltText(name) {
-    return '"' + name + '" written in Grade 1 (uncontracted) braille below the Lincoln & Lindsey Blind Society logo. The dots shown would be raised on the page to be read by touch.';
-  }
-  function buildShareText(name) {
-    return '"' + name + '" in Grade 1 braille. #LLBS\n\nImage: ' + buildAltText(name);
-  }
-  function buildBreakdown(brailleName) {
+  // Thin DOM wrapper around braille.js's pure buildBreakdown(): computes the
+  // summary and per-cell text there, renders it into the page here.
+  function renderBreakdown(brailleName) {
+    const { summary, items } = buildBreakdown(brailleName);
     breakdownList.innerHTML = '';
-    const lc = brailleName.replace(/\s/g,'').length;
-    breakdownSum.textContent = 'The braille spells "' + brailleName + '" with ' + lc +
-      ' letter' + (lc === 1 ? '' : 's') + '. Each cell:';
-    for (const ch of brailleName) {
+    breakdownSum.textContent = summary;
+    for (const text of items) {
       const li = document.createElement('li');
-      if (ch === ' ') li.textContent = '(space) \u2014 empty cell';
-      else {
-        const dots = BRAILLE_MAP[ch] || [];
-        li.textContent = ch.toUpperCase() + (dots.length === 0
-          ? ' \u2014 no dots'
-          : ' \u2014 dot' + (dots.length === 1 ? '' : 's') + ' ' + dots.join(', '));
-      }
+      li.textContent = text;
       breakdownList.appendChild(li);
     }
   }
@@ -237,7 +173,7 @@
     altTextEl.value = altText;
     shareTextEl.value = buildShareText(displayName);
     updateCharCount();
-    buildBreakdown(brailleName);
+    renderBreakdown(brailleName);
     iosTip.hidden = !isIOS();
     result.hidden = false;
     setStatus('Image generated for "' + displayName + '". Save with Download PNG, or use the Share section below.', 'success');

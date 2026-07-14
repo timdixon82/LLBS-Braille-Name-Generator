@@ -13,6 +13,8 @@ The repository was adopted with a single `index.html` containing all structure, 
 
 Extract the inline `<style>` block to `styles/main.css`. Extract the inline `<script>` block to `scripts/app.js`. The `BRAILLE_MAP`, `SPECIAL_CHAR_MAP`, and `BLOCKED` data remain in `app.js` because they are small enough to keep with the code.
 
+(Note: this last point is superseded by [Decision 007](007-braille-helpers-extraction.md), which moved this data and other pure, DOM-free functions to `scripts/braille.js` so they can be unit-tested.)
+
 The refactor is behaviour-preserving. The page looks and works the same as before.
 
 ## Consequences
