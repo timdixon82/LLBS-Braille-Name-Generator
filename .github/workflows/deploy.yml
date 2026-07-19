@@ -183,17 +183,25 @@ jobs:
   #       # default. Path names match the canonical static front-end layout
   #       # in docs/stacks/static-front-end.md. Add one explicit --include
   #       # line for any extra runtime path your project genuinely needs.
+  #       #
+  #       # Every include below (other than the '*/' descend-only pattern)
+  #       # carries a leading '/' to anchor it to the repo root. An rsync
+  #       # include that contains a '/' but has NO leading '/' is NOT
+  #       # anchored — it matches at any depth, not just the root, so an
+  #       # unanchored 'scripts/***' or 'data/***' also matches nested
+  #       # node_modules paths (e.g. node_modules/ajv/scripts/*), silently
+  #       # publishing node_modules internals to the public site.
   #       run: |
   #         mkdir _site
   #         # The allow-listed paths below (styles/, scripts/, data/,
   #         # assets/, index.html) are published to the public site: never
   #         # put a secret or other non-public file in any of them.
   #         rsync -a --prune-empty-dirs --safe-links \
-  #                  --include='index.html' \
-  #                  --include='styles/***' \
-  #                  --include='scripts/***' \
-  #                  --include='data/***' \
-  #                  --include='assets/***' \
+  #                  --include='/index.html' \
+  #                  --include='/styles/***' \
+  #                  --include='/scripts/***' \
+  #                  --include='/data/***' \
+  #                  --include='/assets/***' \
   #                  --include='*/' \
   #                  --exclude='*' \
   #                  ./ _site/
