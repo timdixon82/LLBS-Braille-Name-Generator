@@ -105,28 +105,38 @@ jobs:
         # project that genuinely needs an extra runtime path (for example
         # fonts/ kept outside assets/) adds one explicit --include line
         # for it, rather than loosening the list.
-        #
-        # Every include below (other than the '*/' descend-only pattern)
-        # carries a leading '/' to anchor it to the repo root. An rsync
-        # include that contains a '/' but has NO leading '/' is NOT
-        # anchored — it matches at any depth, not just the root. Because
-        # npm ci runs before this step, an unanchored 'scripts/***' also
-        # matches nested paths such as node_modules/ajv/scripts/*, and
-        # unanchored 'data/***' also matches node_modules/css-tree/data/*,
-        # silently publishing node_modules internals to the public site.
         id: artifact
         run: |
           if [ -d dist ]; then
             echo "path=dist" >> "$GITHUB_OUTPUT"
           else
             mkdir _site
-            # The allow-listed paths below (styles/, scripts/, data/,
-            # assets/, index.html) are published to the public site: never
-            # put a secret or other non-public file in any of them.
+            # The allow-listed paths below (styles/, scripts/app.js,
+            # scripts/braille.js, assets/, index.html) are published to the
+            # public site: never put a secret or other non-public file in
+            # any of them.
+            #
+            # LLBS-BNG-specific: two changes from the template pattern.
+            # 1. Every include is anchored with a leading / (rsync
+            #    unanchored patterns match at ANY depth, so an unanchored
+            #    "scripts/***" also matches paths like
+            #    node_modules/ajv/scripts/bundle.js once `npm ci` above has
+            #    populated node_modules -- confirmed by a local rsync
+            #    dry-run before this fix leaked node_modules and
+            #    .github/accessibility-tools contents into _site/).
+            # 2. scripts/ lists the two runtime files explicitly
+            #    (scripts/app.js, scripts/braille.js) instead of
+            #    scripts/*** , because this repo also keeps
+            #    scripts/braille.test.js and dev-tooling shell scripts
+            #    (next-q.sh, record-backport.sh, sync-from-template.sh,
+            #    tasks.sh) in the same directory; those are not runtime
+            #    files and must not be published.
             rsync -a --prune-empty-dirs --safe-links \
                      --include='/index.html' \
                      --include='/styles/***' \
-                     --include='/scripts/***' \
+                     --include='/scripts/' \
+                     --include='/scripts/app.js' \
+                     --include='/scripts/braille.js' \
                      --include='/data/***' \
                      --include='/assets/***' \
                      --include='*/' \
