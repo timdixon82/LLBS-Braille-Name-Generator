@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/timdixon82/LLBS-Braille-Name-Generator/compare/v0.2.0...v0.2.1) (2026-07-23)
+
+
+### Bug Fixes
+
+* bump js-yaml to 4.3.0 to resolve Dependabot alert [#5](https://github.com/timdixon82/LLBS-Braille-Name-Generator/issues/5) ([daab621](https://github.com/timdixon82/LLBS-Braille-Name-Generator/commit/daab621380554b63c4556f886d406760d0eb6c81))
+* bump js-yaml to 4.3.0 to resolve Dependabot alert [#5](https://github.com/timdixon82/LLBS-Braille-Name-Generator/issues/5) ([bb64e3c](https://github.com/timdixon82/LLBS-Braille-Name-Generator/commit/bb64e3c92413ee9a89f7449c63e5c21df1b7d4ee))
+
 ## [0.2.0](https://github.com/timdixon82/LLBS-Braille-Name-Generator/compare/v0.1.0...v0.2.0) (2026-06-05)
 
 
