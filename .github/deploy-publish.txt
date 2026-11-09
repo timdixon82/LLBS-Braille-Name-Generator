@@ -1,0 +1,14 @@
+# Publish list for the LLBS Braille Name Generator. Everything public is named here.
+# Read as data by .github/scripts/deploy-publish.sh. A change to this file changes what is public.
+/index.html
+/styles/
+/assets/
+/scripts/app.js
+/scripts/braille.js
+require /index.html
+require /styles/main.css
+require /assets/llbs-logo.png
+require /assets/fonts/DM-Sans.woff2
+require /assets/analytics/count.js
+require /scripts/app.js
+require /scripts/braille.js
