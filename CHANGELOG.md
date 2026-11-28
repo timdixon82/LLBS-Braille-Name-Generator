@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.2](https://github.com/timdixon82/LLBS-Braille-Name-Generator/compare/v0.2.1...v0.2.2) (2026-11-28)
+
+
+### Bug Fixes
+
+* correct the deploy allow-list to the files the site loads ([#35](https://github.com/timdixon82/LLBS-Braille-Name-Generator/issues/35)) ([bd8e3fb](https://github.com/timdixon82/LLBS-Braille-Name-Generator/commit/bd8e3fbcd43da32f9a61a67386c94bcb87f37787))
+* **deps:** refresh lockfile for fast-uri and brace-expansion security fixes ([#40](https://github.com/timdixon82/LLBS-Braille-Name-Generator/issues/40)) ([00f0cc2](https://github.com/timdixon82/LLBS-Braille-Name-Generator/commit/00f0cc2e06055067eb2f0fe99f773d0bf4e2ae8c))
+* **deps:** upgrade stylelint and config-standard together ([6958dfe](https://github.com/timdixon82/LLBS-Braille-Name-Generator/commit/6958dfe5045e60a5f08f145c52b8449cc6e979b7))
+* **deps:** upgrade stylelint and stylelint-config-standard together ([ce09cde](https://github.com/timdixon82/LLBS-Braille-Name-Generator/commit/ce09cde09164c7f1a01a989da81148d1f428b9c7))
+
 ## [0.2.1](https://github.com/timdixon82/LLBS-Braille-Name-Generator/compare/v0.2.0...v0.2.1) (2026-07-23)
 
 
